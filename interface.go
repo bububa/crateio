@@ -1,0 +1,32 @@
+package crateio
+
+import "fmt"
+
+const (
+	SQL_PATH = "/_sql"
+)
+
+type Query struct {
+	Stmt string        `json:"stmt"`
+	Args []interface{} `json:"args,omitempty"`
+}
+
+type Conn struct {
+	servers []string
+}
+
+type Result struct {
+	Cols     []string        `json:"cols"`
+	ColTypes []uint          `json:"col_types"`
+	Rows     [][]interface{} `json:"rows"`
+	RowCount int32           `json:"rowcount"`
+}
+
+type SqlError struct {
+	Message string `json:"message"`
+	Code    uint   `json:"code"`
+}
+
+func (this *SqlError) Error() string {
+	return fmt.Sprintf("Code:%d, Msg:%s", this.Code, this.Message)
+}
