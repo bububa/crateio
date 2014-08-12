@@ -36,13 +36,14 @@ func (this *Conn) Query(stmt string, args ...interface{}) (*Result, error) {
 	if err != nil {
 		return nil, err
 	}
-	myError := make(map[string]*SqlError)
+
+	myError := &SqlError{}
 	err = json.Unmarshal(body, myError)
 	if err != nil {
 		return nil, err
 	}
-	if sqlErr, found := myError["error"]; found {
-		return nil, sqlErr
+	if myError.Detail != nil {
+		return nil, myError
 	}
 
 	result := &Result{}
@@ -54,6 +55,6 @@ func (this *Conn) Query(stmt string, args ...interface{}) (*Result, error) {
 }
 
 func (this *Conn) selectServer() string {
-	pos := rand.Intn(len(this.servers) + 1)
+	pos := rand.Intn(len(this.servers))
 	return this.servers[pos]
 }

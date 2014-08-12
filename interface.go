@@ -20,13 +20,19 @@ type Result struct {
 	ColTypes []uint          `json:"col_types"`
 	Rows     [][]interface{} `json:"rows"`
 	RowCount int32           `json:"rowcount"`
+	Duration int             `json:"duration"`
 }
 
 type SqlError struct {
+	Detail *ErrorMessage `json:"error"`
+	Trace  string        `json:"error_trace"`
+}
+
+type ErrorMessage struct {
 	Message string `json:"message"`
 	Code    uint   `json:"code"`
 }
 
 func (this *SqlError) Error() string {
-	return fmt.Sprintf("Code:%d, Msg:%s", this.Code, this.Message)
+	return fmt.Sprintf("Code:%d, Msg:%s", this.Detail.Code, this.Detail.Message)
 }
