@@ -113,6 +113,59 @@ func (this *Result) Int(idx int, key string) (int, error) {
 	return 0, nil
 }
 
+func (this *Result) Uint(idx int, key string) (uint, error) {
+	val, err := this.row(idx, key)
+	if err != nil {
+		return 0, err
+	}
+	switch val.(type) {
+	case uint:
+		return val.(uint), nil
+	case int:
+		return uint(val.(int)), nil
+	case int64:
+		return uint(val.(int64)), nil
+	case int32:
+		return uint(val.(int32)), nil
+	case int16:
+		return uint(val.(int16)), nil
+	case int8:
+		return uint(val.(int8)), nil
+	case uint8:
+		return uint(val.(uint8)), nil
+	case uint16:
+		return uint(val.(uint16)), nil
+	case uint32:
+		return uint(val.(uint32)), nil
+	case uint64:
+		return uint(val.(uint64)), nil
+	case float64:
+		return uint(val.(float64)), nil
+	case float32:
+		return uint(val.(float32)), nil
+	case nil:
+		return 0, nil
+	case string:
+		n, e := strconv.ParseUint(val.(string), 10, 32)
+		if e != nil {
+			n, e := strconv.ParseFloat(val.(string), 64)
+			if e != nil {
+				return 0, nil
+			}
+			return uint(n), nil
+		}
+		return uint(n), nil
+	case bool:
+		switch val.(bool) {
+		case true:
+			return 1, nil
+		case false:
+			return 0, nil
+		}
+	}
+	return 0, nil
+}
+
 func (this *Result) Int64(idx int, key string) (int64, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
@@ -164,6 +217,59 @@ func (this *Result) Int64(idx int, key string) (int64, error) {
 		}
 	}
 	return val.(int64), nil
+}
+
+func (this *Result) Uint64(idx int, key string) (uint64, error) {
+	val, err := this.row(idx, key)
+	if err != nil {
+		return 0, err
+	}
+	switch val.(type) {
+	case uint:
+		return uint64(val.(uint)), nil
+	case int:
+		return uint64(val.(int)), nil
+	case int64:
+		return uint64(val.(int64)), nil
+	case int32:
+		return uint64(val.(int32)), nil
+	case int16:
+		return uint64(val.(int16)), nil
+	case int8:
+		return uint64(val.(int8)), nil
+	case uint8:
+		return uint64(val.(uint8)), nil
+	case uint16:
+		return uint64(val.(uint16)), nil
+	case uint32:
+		return uint64(val.(uint32)), nil
+	case uint64:
+		return val.(uint64), nil
+	case float64:
+		return uint64(val.(float64)), nil
+	case float32:
+		return uint64(val.(float32)), nil
+	case nil:
+		return 0, nil
+	case string:
+		n, e := strconv.ParseUint(val.(string), 10, 64)
+		if e != nil {
+			n, e := strconv.ParseFloat(val.(string), 64)
+			if e != nil {
+				return 0, nil
+			}
+			return uint64(n), nil
+		}
+		return uint64(n), nil
+	case bool:
+		switch val.(bool) {
+		case true:
+			return 1, nil
+		case false:
+			return 0, nil
+		}
+	}
+	return val.(uint64), nil
 }
 
 func (this *Result) Float32(idx int, key string) (float32, error) {

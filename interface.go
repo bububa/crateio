@@ -7,8 +7,9 @@ const (
 )
 
 type Query struct {
-	Stmt string        `json:"stmt"`
-	Args []interface{} `json:"args,omitempty"`
+	Stmt     string          `json:"stmt"`
+	Args     []interface{}   `json:"args,omitempty"`
+	BulkArgs [][]interface{} `json:"bulk_args,omitempty"`
 }
 
 type Conn struct {
@@ -21,6 +22,7 @@ type Result struct {
 	Rows     [][]interface{} `json:"rows"`
 	RowCount int32           `json:"rowcount"`
 	Duration int             `json:"duration"`
+	Results  []*Result       `json:"results,omitempty"`
 }
 
 type SqlError struct {
