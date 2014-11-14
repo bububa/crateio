@@ -96,6 +96,9 @@ func (this *Conn) BulkQuery(stmt string, args [][]interface{}) (*Result, error) 
 }
 
 func (this *Conn) selectServer() string {
+	if len(this.servers) == 0 {
+		return "localhost:4200"
+	}
 	if len(this.servers) == 1 {
 		return this.servers[0]
 	}
