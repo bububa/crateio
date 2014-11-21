@@ -14,7 +14,7 @@ func NewConn(servers []string) *Conn {
 }
 
 func (this *Conn) Query(stmt string, args ...interface{}) (*Result, error) {
-	endpoint := fmt.Sprintf("http://%s%s?types&error_trace=True", this.selectServer(), SQL_PATH)
+	endpoint := fmt.Sprintf("http://%s%s?types", this.selectServer(), SQL_PATH)
 	query := &Query{
 		Stmt: stmt,
 		Args: args,
@@ -55,7 +55,7 @@ func (this *Conn) Query(stmt string, args ...interface{}) (*Result, error) {
 }
 
 func (this *Conn) BulkQuery(stmt string, args [][]interface{}) (*Result, error) {
-	endpoint := fmt.Sprintf("http://%s%s?types&error_trace=True", this.selectServer(), SQL_PATH)
+	endpoint := fmt.Sprintf("http://%s%s?types", this.selectServer(), SQL_PATH)
 	query := &Query{
 		Stmt:     stmt,
 		BulkArgs: args,
