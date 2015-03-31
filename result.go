@@ -272,6 +272,59 @@ func (this *Result) Uint64(idx int, key string) (uint64, error) {
 	return val.(uint64), nil
 }
 
+func (this *Result) Uint32(idx int, key string) (uint32, error) {
+	val, err := this.row(idx, key)
+	if err != nil {
+		return 0, err
+	}
+	switch val.(type) {
+	case uint:
+		return uint32(val.(uint)), nil
+	case int:
+		return uint32(val.(int)), nil
+	case int64:
+		return uint32(val.(int64)), nil
+	case int32:
+		return uint32(val.(int32)), nil
+	case int16:
+		return uint32(val.(int16)), nil
+	case int8:
+		return uint32(val.(int8)), nil
+	case uint8:
+		return uint32(val.(uint8)), nil
+	case uint16:
+		return uint32(val.(uint16)), nil
+	case uint32:
+		return val.(uint32), nil
+	case uint64:
+		return uint32(val.(uint64)), nil
+	case float64:
+		return uint32(val.(float64)), nil
+	case float32:
+		return uint32(val.(float32)), nil
+	case nil:
+		return 0, nil
+	case string:
+		n, e := strconv.ParseUint(val.(string), 10, 64)
+		if e != nil {
+			n, e := strconv.ParseFloat(val.(string), 64)
+			if e != nil {
+				return 0, nil
+			}
+			return uint32(n), nil
+		}
+		return uint32(n), nil
+	case bool:
+		switch val.(bool) {
+		case true:
+			return 1, nil
+		case false:
+			return 0, nil
+		}
+	}
+	return val.(uint32), nil
+}
+
 func (this *Result) Float32(idx int, key string) (float32, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
