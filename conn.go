@@ -36,7 +36,6 @@ func (this *Conn) Query(stmt string, args ...interface{}) (*Result, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	myError := &SqlError{}
 	err = json.Unmarshal(body, myError)
 	if err != nil {

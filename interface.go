@@ -18,7 +18,7 @@ type Conn struct {
 
 type Result struct {
 	Cols     []string        `json:"cols"`
-	ColTypes []uint          `json:"col_types"`
+	ColTypes []interface{}   `json:"col_types"`
 	Rows     [][]interface{} `json:"rows"`
 	RowCount int32           `json:"rowcount"`
 	Duration int             `json:"duration"`
