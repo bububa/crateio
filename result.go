@@ -43,7 +43,7 @@ var strToTimeFormats = []string{
 	time.StampNano,
 }
 
-func (this *Result) row(idx int, key string) (interface{}, error) {
+func (this Result) row(idx int, key string) (interface{}, error) {
 	pos := -1
 	for i, k := range this.Cols {
 		if key != k {
@@ -60,7 +60,7 @@ func (this *Result) row(idx int, key string) (interface{}, error) {
 
 }
 
-func (this *Result) Int(idx int, key string) (int, error) {
+func (this Result) Int(idx int, key string) (int, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return 0, err
@@ -68,7 +68,7 @@ func (this *Result) Int(idx int, key string) (int, error) {
 	return mustInt(val), nil
 }
 
-func (this *Result) Uint(idx int, key string) (uint, error) {
+func (this Result) Uint(idx int, key string) (uint, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return 0, err
@@ -76,7 +76,7 @@ func (this *Result) Uint(idx int, key string) (uint, error) {
 	return mustUint(val), nil
 }
 
-func (this *Result) Int64(idx int, key string) (int64, error) {
+func (this Result) Int64(idx int, key string) (int64, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return 0, err
@@ -84,7 +84,7 @@ func (this *Result) Int64(idx int, key string) (int64, error) {
 	return mustInt64(val), nil
 }
 
-func (this *Result) Uint64(idx int, key string) (uint64, error) {
+func (this Result) Uint64(idx int, key string) (uint64, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return 0, err
@@ -92,7 +92,7 @@ func (this *Result) Uint64(idx int, key string) (uint64, error) {
 	return mustUint64(val), nil
 }
 
-func (this *Result) Uint32(idx int, key string) (uint32, error) {
+func (this Result) Uint32(idx int, key string) (uint32, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return 0, err
@@ -100,7 +100,7 @@ func (this *Result) Uint32(idx int, key string) (uint32, error) {
 	return mustUint32(val), nil
 }
 
-func (this *Result) Float32(idx int, key string) (float32, error) {
+func (this Result) Float32(idx int, key string) (float32, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return 0, err
@@ -108,7 +108,7 @@ func (this *Result) Float32(idx int, key string) (float32, error) {
 	return mustFloat32(val), nil
 }
 
-func (this *Result) Float64(idx int, key string) (float64, error) {
+func (this Result) Float64(idx int, key string) (float64, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return 0, err
@@ -116,7 +116,7 @@ func (this *Result) Float64(idx int, key string) (float64, error) {
 	return mustFloat64(val), nil
 }
 
-func (this *Result) Str(idx int, key string) (string, error) {
+func (this Result) Str(idx int, key string) (string, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return "", err
@@ -124,7 +124,7 @@ func (this *Result) Str(idx int, key string) (string, error) {
 	return mustStr(val), nil
 }
 
-func (this *Result) Time(idx int, key string) (time.Time, error) {
+func (this Result) Time(idx int, key string) (time.Time, error) {
 	val, err := this.row(idx, key)
 	if err != nil {
 		return time.Unix(0, 0), err
@@ -132,7 +132,7 @@ func (this *Result) Time(idx int, key string) (time.Time, error) {
 	return mustTime(val), nil
 }
 
-func (this *Result) Date(idx int, key string) (time.Time, error) {
+func (this Result) Date(idx int, key string) (time.Time, error) {
 	t, err := this.Time(idx, key)
 	if err != nil {
 		return time.Unix(0, 0), err
@@ -140,7 +140,7 @@ func (this *Result) Date(idx int, key string) (time.Time, error) {
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location()), nil
 }
 
-func (this *Result) IntSlice(idx int, key string) ([]int, error) {
+func (this Result) IntSlice(idx int, key string) ([]int, error) {
 	var ret []int
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -152,7 +152,7 @@ func (this *Result) IntSlice(idx int, key string) ([]int, error) {
 	return ret, nil
 }
 
-func (this *Result) UintSlice(idx int, key string) ([]uint, error) {
+func (this Result) UintSlice(idx int, key string) ([]uint, error) {
 	var ret []uint
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -164,7 +164,7 @@ func (this *Result) UintSlice(idx int, key string) ([]uint, error) {
 	return ret, nil
 }
 
-func (this *Result) Int64Slice(idx int, key string) ([]int64, error) {
+func (this Result) Int64Slice(idx int, key string) ([]int64, error) {
 	var ret []int64
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -176,7 +176,7 @@ func (this *Result) Int64Slice(idx int, key string) ([]int64, error) {
 	return ret, nil
 }
 
-func (this *Result) Uint64Slice(idx int, key string) ([]uint64, error) {
+func (this Result) Uint64Slice(idx int, key string) ([]uint64, error) {
 	var ret []uint64
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -188,7 +188,7 @@ func (this *Result) Uint64Slice(idx int, key string) ([]uint64, error) {
 	return ret, nil
 }
 
-func (this *Result) Uint32Slice(idx int, key string) ([]uint32, error) {
+func (this Result) Uint32Slice(idx int, key string) ([]uint32, error) {
 	var ret []uint32
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -200,7 +200,7 @@ func (this *Result) Uint32Slice(idx int, key string) ([]uint32, error) {
 	return ret, nil
 }
 
-func (this *Result) Float32Slice(idx int, key string) ([]float32, error) {
+func (this Result) Float32Slice(idx int, key string) ([]float32, error) {
 	var ret []float32
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -212,7 +212,7 @@ func (this *Result) Float32Slice(idx int, key string) ([]float32, error) {
 	return ret, nil
 }
 
-func (this *Result) Float64Slice(idx int, key string) ([]float64, error) {
+func (this Result) Float64Slice(idx int, key string) ([]float64, error) {
 	var ret []float64
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -224,7 +224,7 @@ func (this *Result) Float64Slice(idx int, key string) ([]float64, error) {
 	return ret, nil
 }
 
-func (this *Result) StrSlice(idx int, key string) ([]string, error) {
+func (this Result) StrSlice(idx int, key string) ([]string, error) {
 	var ret []string
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -236,7 +236,7 @@ func (this *Result) StrSlice(idx int, key string) ([]string, error) {
 	return ret, nil
 }
 
-func (this *Result) TimeSlice(idx int, key string) ([]time.Time, error) {
+func (this Result) TimeSlice(idx int, key string) ([]time.Time, error) {
 	var ret []time.Time
 	arr, err := this.row(idx, key)
 	if err != nil {
@@ -248,7 +248,7 @@ func (this *Result) TimeSlice(idx int, key string) ([]time.Time, error) {
 	return ret, nil
 }
 
-func (this *Result) DateSlice(idx int, key string) ([]time.Time, error) {
+func (this Result) DateSlice(idx int, key string) ([]time.Time, error) {
 	var ret []time.Time
 	arr, err := this.TimeSlice(idx, key)
 	if err != nil {

@@ -22,7 +22,7 @@ type Result struct {
 	Rows     [][]interface{} `json:"rows"`
 	RowCount int32           `json:"rowcount"`
 	Duration int             `json:"duration"`
-	Results  []*Result       `json:"results,omitempty"`
+	Results  []Result        `json:"results,omitempty"`
 }
 
 type SqlError struct {
