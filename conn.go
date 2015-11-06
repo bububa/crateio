@@ -13,7 +13,7 @@ func NewConn(servers []string) *Conn {
 	return &Conn{servers: servers}
 }
 
-func (this *Conn) Query(stmt string, args ...interface{}) (result Result, err error) {
+func (this *Conn) Query(stmt string, args ...interface{}) (*Result, error) {
 	endpoint := fmt.Sprintf("http://%s%s?types", this.selectServer(), SQL_PATH)
 	query := &Query{
 		Stmt: stmt,
@@ -22,36 +22,37 @@ func (this *Conn) Query(stmt string, args ...interface{}) (result Result, err er
 
 	buf, err := json.Marshal(query)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	data := bytes.NewReader(buf)
 
 	resp, err := http.Post(endpoint, "application/json", data)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	myError := &SqlError{}
 	err = json.Unmarshal(body, myError)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	if myError.Detail != nil {
-		return result, myError
+		return nil, myError
 	}
-	err = json.Unmarshal(body, &result)
+	result := &Result{}
+	err = json.Unmarshal(body, result)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	return result, nil
 }
 
-func (this *Conn) BulkQuery(stmt string, args [][]interface{}) (result Result, err error) {
+func (this *Conn) BulkQuery(stmt string, args [][]interface{}) (*Result, error) {
 	endpoint := fmt.Sprintf("http://%s%s?types", this.selectServer(), SQL_PATH)
 	query := &Query{
 		Stmt:     stmt,
@@ -59,34 +60,34 @@ func (this *Conn) BulkQuery(stmt string, args [][]interface{}) (result Result, e
 	}
 	buf, err := json.Marshal(query)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 
 	data := bytes.NewReader(buf)
 
 	resp, err := http.Post(endpoint, "application/json", data)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 
 	myError := &SqlError{}
 	err = json.Unmarshal(body, myError)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	if myError.Detail != nil {
-		return result, myError
+		return nil, myError
 	}
-
-	err = json.Unmarshal(body, &result)
+	result := &Result{}
+	err = json.Unmarshal(body, result)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	return result, nil
 }
