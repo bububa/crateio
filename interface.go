@@ -1,6 +1,9 @@
 package crateio
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 const (
 	SQL_PATH = "/_sql"
@@ -17,12 +20,17 @@ type Conn struct {
 }
 
 type Result struct {
-	Cols     []string        `json:"cols"`
-	ColTypes []interface{}   `json:"col_types"`
-	Rows     [][]interface{} `json:"rows"`
-	RowCount int32           `json:"rowcount"`
-	Duration int             `json:"duration"`
-	Results  []Result        `json:"results,omitempty"`
+	Cols      []string        `json:"cols"`
+	ColTypes  []interface{}   `json:"col_types"`
+	Rows      [][]interface{} `json:"rows"`
+	RowCount  int32           `json:"rowcount"`
+	Duration  int             `json:"duration"`
+	Results   []Result        `json:"results,omitempty"`
+	ExpiredAt time.Time       `json:"-"`
+}
+
+func (this Result) Expired() bool {
+	return time.Now().After(this.ExpiredAt)
 }
 
 type SqlError struct {
