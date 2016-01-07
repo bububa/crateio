@@ -146,6 +146,9 @@ func (this Result) IntSlice(idx int, key string) ([]int, error) {
 	if err != nil {
 		return nil, err
 	}
+	if arr == nil {
+		return ret, nil
+	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustInt(val))
 	}
@@ -157,6 +160,9 @@ func (this Result) UintSlice(idx int, key string) ([]uint, error) {
 	arr, err := this.row(idx, key)
 	if err != nil {
 		return nil, err
+	}
+	if arr == nil {
+		return ret, nil
 	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustUint(val))
@@ -170,6 +176,9 @@ func (this Result) Int64Slice(idx int, key string) ([]int64, error) {
 	if err != nil {
 		return nil, err
 	}
+	if arr == nil {
+		return ret, nil
+	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustInt64(val))
 	}
@@ -181,6 +190,9 @@ func (this Result) Uint64Slice(idx int, key string) ([]uint64, error) {
 	arr, err := this.row(idx, key)
 	if err != nil {
 		return nil, err
+	}
+	if arr == nil {
+		return ret, nil
 	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustUint64(val))
@@ -194,6 +206,9 @@ func (this Result) Uint32Slice(idx int, key string) ([]uint32, error) {
 	if err != nil {
 		return nil, err
 	}
+	if arr == nil {
+		return ret, nil
+	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustUint32(val))
 	}
@@ -205,6 +220,9 @@ func (this Result) Float32Slice(idx int, key string) ([]float32, error) {
 	arr, err := this.row(idx, key)
 	if err != nil {
 		return nil, err
+	}
+	if arr == nil {
+		return ret, nil
 	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustFloat32(val))
@@ -218,6 +236,9 @@ func (this Result) Float64Slice(idx int, key string) ([]float64, error) {
 	if err != nil {
 		return nil, err
 	}
+	if arr == nil {
+		return ret, nil
+	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustFloat64(val))
 	}
@@ -230,6 +251,9 @@ func (this Result) StrSlice(idx int, key string) ([]string, error) {
 	if err != nil {
 		return ret, err
 	}
+	if arr == nil {
+		return ret, nil
+	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustStr(val))
 	}
@@ -241,6 +265,9 @@ func (this Result) TimeSlice(idx int, key string) ([]time.Time, error) {
 	arr, err := this.row(idx, key)
 	if err != nil {
 		return nil, err
+	}
+	if arr == nil {
+		return ret, nil
 	}
 	for _, val := range arr.([]interface{}) {
 		ret = append(ret, mustTime(val))
