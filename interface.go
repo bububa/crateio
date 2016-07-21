@@ -24,7 +24,7 @@ type Result struct {
 	ColTypes  []interface{}   `json:"col_types"`
 	Rows      [][]interface{} `json:"rows"`
 	RowCount  int32           `json:"rowcount"`
-	Duration  int             `json:"duration"`
+	Duration  float32         `json:"duration"`
 	Results   []Result        `json:"results,omitempty"`
 	ExpiredAt time.Time       `json:"-"`
 }
